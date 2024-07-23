@@ -13,6 +13,11 @@ class CnpjController extends Controller
         return view('cnpjs.index', compact('cnpjs'));
     }
 
+    public function show()
+    {
+        return redirect()->route('cnpjs.index')->with('success', 'CNPJ atualizado com sucesso.');
+    }
+
     public function create()
     {
         return view('cnpjs.create');

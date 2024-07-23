@@ -12,6 +12,12 @@ class NcmController extends Controller
         return view('ncms.index', ['ncms' => Ncm::all()]);
     }
 
+    public function show()
+    {
+        return redirect()->route('ncms.index')
+                        ->with('success', 'NCM atualizado com sucesso.');
+    }
+
     public function create()
     {
         return view('ncms.create');
