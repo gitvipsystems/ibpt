@@ -39,6 +39,7 @@
     </form>
 </div>
 @endsection
+@push('scripts')
 <script>
     $(document).ready(function(){
         $('#ncm').mask('0000.00.00');
