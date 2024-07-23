@@ -26,6 +26,7 @@ class IbptController extends Controller
 
         return response()->json(['message' => 'Job dispatched successfully']);
     }
+    
     public function dispatchIbptJob(Request $request)
     {
         $descricao = $request->input('descricao');
