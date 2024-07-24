@@ -38,7 +38,8 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            'retry_after' => 180, // 3 minutos
+            'timeout' => 300, // 5 minutos
         ],
         
         'sqlite' => [

@@ -38,7 +38,8 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 90,
+            'retry_after' => 180, // 3 minutos
+            'timeout' => 300, // 5 minutos
             'after_commit' => false,
         ],
 
@@ -46,7 +47,8 @@ return [
             'driver' => 'beanstalkd',
             'host' => 'localhost',
             'queue' => 'default',
-            'retry_after' => 90,
+            'retry_after' => 9000,
+            'timeout' => 180,
             'block_for' => 0,
             'after_commit' => false,
         ],
@@ -66,7 +68,8 @@ return [
             'driver' => 'redis',
             'connection' => 'default',
             'queue' => env('REDIS_QUEUE', 'default'),
-            'retry_after' => 90,
+            'retry_after' => 9000,
+            'timeout' => 180,
             'block_for' => null,
             'after_commit' => false,
         ],
