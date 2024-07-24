@@ -32,10 +32,6 @@ class DispatchIbptJobs implements ShouldQueue
 
     public function handle()
     {
-        if (DB::table('jobs')->count() > 0) {
-            return;
-        }
-
         // Obter o CNPJ mais recente
         $cnpj = Cnpj::latest()->first()->cnpj;
         $token = Cnpj::latest()->first()->token;

@@ -12,8 +12,7 @@ class IbptController extends Controller
 
     public function dispatchUniqueIbptJob(Request $request)
     {
-        $cnpj = $request->input('cnpj');
-        $token = $request->input('token');
+        $cnpj = $request->input('cnpj');        
         $codigo = $request->input('codigo');
         $uf = $request->input('uf');
         $ex = $request->input('ex');
