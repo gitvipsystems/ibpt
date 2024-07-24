@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-dd(__DIR__);
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
@@ -46,7 +45,7 @@ require __DIR__.'/../vendor/autoload.php';
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
-
+dd(__DIR__);
 $kernel = $app->make(Kernel::class);
 
 $response = $kernel->handle(
