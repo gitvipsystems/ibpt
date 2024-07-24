@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Jobs\IbptJob;
 use App\Models\Ncm;
 use App\Models\Cnpj;
+use Illuminate\Support\Facades\Log; // Importa a classe Log
 use DB;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,12 +33,21 @@ class DispatchIbptJobs implements ShouldQueue
 
     public function handle()
     {
+        // Adiciona log para o início da execução
+        Log::info('DispatchIbptJobs started', [
+            'descricao' => $this->descricao,
+            'unidadeMedida' => $this->unidadeMedida,
+            'valor' => $this->valor,
+            'gtin' => $this->gtin
+        ]);
+
         // Obter o CNPJ mais recente
         $cnpj = Cnpj::latest()->first()->cnpj;
         $token = Cnpj::latest()->first()->token;
 
         // Lista de NCMs
         $ncms = Ncm::pluck('ncm')->toArray();
+        Log::info('NCMs retrieved', ['ncms' => $ncms]);
 
         // Lista de UF
         $ufs = [
@@ -51,15 +61,30 @@ class DispatchIbptJobs implements ShouldQueue
 
         // Dividindo a lista de NCMs em lotes menores
         $ncmsBatches = array_chunk($ncms, $batchSize);
+        Log::info('NCMs batches created', ['ncmsBatches' => $ncmsBatches]);
 
         // Loop para chamar o job para cada lote de NCMs e UF
         foreach ($ncmsBatches as $ncmsBatch) {
             foreach ($ufs as $uf) {
                 // Despacha o job IbptJob com os dados fixos de NCM e UF e os outros parâmetros variáveis
                 foreach ($ncmsBatch as $codigo) {
+                    Log::info('Dispatching IbptJob', [
+                        'cnpj' => $cnpj,
+                        'token' => $token,
+                        'codigo' => $codigo,
+                        'uf' => $uf,
+                        'descricao' => $this->descricao,
+                        'unidadeMedida' => $this->unidadeMedida,
+                        'valor' => $this->valor,
+                        'gtin' => $this->gtin
+                    ]);
+                    
                     IbptJob::dispatch($cnpj, $token, $codigo, $uf, '0', $this->descricao, $this->unidadeMedida, $this->valor, $this->gtin)->onQueue('low');
                 }
             }
         }
+
+        // Adiciona log para o final da execução
+        Log::info('DispatchIbptJobs completed');
     }
 }
