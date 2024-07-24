@@ -3,6 +3,7 @@
 @section('content')
 <div class="jumbotron text-center">
     <h1>Bem-vindo ao Sistema</h1>
+    @dd(__DIR__)
     <p>Utilize a navegação acima para gerenciar.</p>
 </div>
 @endsection
